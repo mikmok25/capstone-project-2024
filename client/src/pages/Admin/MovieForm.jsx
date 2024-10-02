@@ -56,7 +56,7 @@ function MovieForm({
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Movie Duration" name="duration">
+            <Form.Item label="Language" name="language">
               <select name="" id="">
                 <option value="">Select Language</option>
                 <option value="English">English</option>
@@ -67,13 +67,13 @@ function MovieForm({
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="Language" name="language">
-              <input type="text" />
+            <Form.Item label="Duration" name="duration">
+              <input type="number" />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Release Date" name="releaseDate">
-              <input type="text" />
+              <input type="date" />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -97,7 +97,7 @@ function MovieForm({
 
         <div className="flex justify-end gap-1">
           <Button
-            title="Canceled"
+            title="Cancel"
             variant="outlined"
             type="button"
             onClick={() => setShowMovieFormModal(false)}
