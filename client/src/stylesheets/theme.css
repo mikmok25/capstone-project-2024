@@ -11,6 +11,18 @@
     background-color: var(--colour-secondary);
 }
 
+.text-error {
+    color: #f00;
+}
+
+.text-warning {
+    color: #fc0;
+}
+
+.text-info {
+    color: rgb(24, 80, 247);
+}
+
 .text-primary {
     color: var(--colour-primary) !important;
 }

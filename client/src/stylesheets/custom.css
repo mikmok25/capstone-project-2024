@@ -20,6 +20,10 @@
   text-transform: uppercase;
 }
 
+i {
+  font-size: 20px;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
