@@ -24,3 +24,16 @@ export const GetAllTheatres = async () => {
     return error.response;
   }
 };
+
+//  Get all theatres by owner
+
+export const GetAllTheatresByOwner = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/theatres/get-all-theatres-by-owner", payload
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};

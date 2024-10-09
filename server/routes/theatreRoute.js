@@ -20,10 +20,10 @@ router.post("/add-theatre", async (req, res) => {
 
 router.get("/get-all-theatres", async (req, res) => {
   try {
-    const theatre = await Theatre.find().sort({ createdAt: -1 });
+    const theatres = await Theatre.find().populate('owner').sort({ createdAt: -1 });
     res.send({
       success: true,
-      data: theatre,
+      data: theatres,
       message: "Theatres fetched successfully",
     });
   } catch (error) {
@@ -34,5 +34,22 @@ router.get("/get-all-theatres", async (req, res) => {
   }
 });
 
-module.exports = router;
+router.post("/get-all-theatres-by-owner", authMiddleware, async (req, res) => {
+  try {
+    const theatres = await Theatre.find({ owner: req.body.owner }).sort({
+      createdAt: -1,
+    });
+    res.send({
+      success: true,
+      message: "Theatres fetched successfully",
+      data: theatres,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 
+module.exports = router;
