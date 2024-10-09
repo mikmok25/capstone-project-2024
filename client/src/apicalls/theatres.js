@@ -37,3 +37,17 @@ export const GetAllTheatresByOwner = async (payload) => {
     return error.response;
   }
 };
+
+// Update theatre
+
+export const updateTheatre = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/theatres/update-theatre",
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+}

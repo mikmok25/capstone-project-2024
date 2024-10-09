@@ -3,7 +3,7 @@ import React from "react";
 import Button from "../../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { Hideloading, ShowLoading } from "../../redux/loadersSlice";
-import { addTheatre } from "../../apicalls/theatres";
+import { addTheatre, updateTheatre } from "../../apicalls/theatres";
 
 function TheatreForm({
   showTheatreFormModal,
@@ -25,6 +25,8 @@ function TheatreForm({
       if (formType === "add") {
         response = await addTheatre(values);
       } else {
+        values.theatreId = selectedTheatre._id;
+        response = await updateTheatre(values);
       }
 
       if (response.success) {
@@ -52,7 +54,9 @@ function TheatreForm({
       }}
       footer={null}
     >
-      <Form layout="vertical" onFinish={onFinish}>
+      <Form layout="vertical" onFinish={onFinish}
+      initialValues={selectedTheatre}
+      >
         <Form.Item
           label="Theatre Name"
           name="name"
