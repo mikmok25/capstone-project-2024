@@ -31,7 +31,22 @@ function MoviesList() {
     }
   };
 
-  
+  const handleDelete = async (movieId) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await deleteMovie({ movieId });
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        message.error(response.message);
+      }
+      dispatch(Hideloading());
+    } catch (error) {
+      dispatch(Hideloading());
+      message.error(error.message);
+    }
+  };
 
   const columns = [
     {
@@ -94,9 +109,8 @@ function MoviesList() {
             <i
               className="ri-delete-bin-line text-error cursor-pointer"
               onClick={() => {
-                setSelectedMovie(record);
+                handleDelete(record._id);
                 setFormType("delete");
-                setShowMovieFormModal(true);
               }}
             ></i>
           </div>
