@@ -51,3 +51,14 @@ export const updateTheatre = async (payload) => {
     return error.response;
   }
 }
+
+// Delete theatre
+
+export const deleteTheatre = async (payload) => {
+  try {
+    const response = await axiosInstance.post("/api/theatres/delete-theatre", payload);
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+}

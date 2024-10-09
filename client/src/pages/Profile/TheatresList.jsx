@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import TheatreForm from "./TheatreForm";
-import { GetAllTheatres, GetAllTheatresByOwner } from "../../apicalls/theatres";
+import {
+  deleteTheatre,
+  GetAllTheatres,
+  GetAllTheatresByOwner,
+} from "../../apicalls/theatres";
 import { message, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Hideloading, ShowLoading } from "../../redux/loadersSlice";
@@ -35,7 +39,22 @@ function TheatresList() {
     }
   };
 
-  const handleDelete = async (id) => {};
+  const handleDelete = async (id) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await deleteTheatre({ theatreId: id });
+      if (response.success) {
+        message.success(response.message);
+        getData();
+      } else {
+        message.error(response.message);
+      }
+      dispatch(Hideloading());
+    } catch (error) {
+      dispatch(Hideloading());
+      message.error(error.message);
+    }
+  };
 
   const columns = [
     {

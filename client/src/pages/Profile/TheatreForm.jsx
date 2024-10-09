@@ -54,8 +54,10 @@ function TheatreForm({
       }}
       footer={null}
     >
-      <Form layout="vertical" onFinish={onFinish}
-      initialValues={selectedTheatre}
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={selectedTheatre}
       >
         <Form.Item
           label="Theatre Name"
@@ -86,16 +88,7 @@ function TheatreForm({
           <input type="text" />
         </Form.Item>
 
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: "Please enter theatre email address",
-            },
-          ]}
-        >
+        <Form.Item label="Email" name="email" initialValue={null || "n/a"}>
           <input type="text" />
         </Form.Item>
 
