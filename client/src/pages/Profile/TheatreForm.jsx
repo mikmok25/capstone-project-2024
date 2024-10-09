@@ -12,6 +12,7 @@ function TheatreForm({
   setFormType,
   selectedTheatre,
   setSelectedTheatre,
+  getData,
 }) {
   const { user } = useSelector((state) => state.users);
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function TheatreForm({
       }
 
       if (response.success) {
+        getData();
         message.success(response.message);
         setShowTheatreFormModal(false);
         setSelectedTheatre(null);
