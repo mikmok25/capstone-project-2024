@@ -36,7 +36,7 @@ function Login() {
   return (
     <div className="flex justify-center items-center h-screen bg-primary">
       <div className="card p-3 w-400">
-        <h3 className="text-xl pb-1">MICKMOVIES - LOGIN</h3>
+        <h3 className="text-xl pb-1">MOVIEMATE - LOGIN</h3>
         <hr />
         <Form layout="vertical" className="mt-1" onFinish={onFinish}>
           <Form.Item

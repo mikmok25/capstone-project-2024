@@ -20,12 +20,39 @@ router.post("/add-movie", authMiddleware, async (req, res) => {
 // Get all movies
 router.get("/get-movies", async (req, res) => {
   try {
-    const movies = await Movie.find();
+    const movies = await Movie.find().sort({ createdAt: -1 });
     res.send({
       success: true,
       message: "Movies fetched successfully",
       data: movies,
     });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Edit or Update a movie
+
+router.post("/update-movie", authMiddleware, async (req, res) => {
+  try {
+    await Movie.findByIdAndUpdate(req.body.movieId, req.body);
+    res.send({ success: true, message: "Movie updated successfully" });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Delete a movie
+router.post("/delete-movie", authMiddleware, async (req, res) => {
+  try {
+    await Movie.findByIdAndDelete(req.body.movieId);
+    res.send({ success: true, message: "Movie deleted successfully" });
   } catch (error) {
     res.send({
       success: false,

@@ -5,7 +5,7 @@ import moment from "moment";
 import { message, Table } from "antd";
 import { useDispatch } from "react-redux";
 import { Hideloading, ShowLoading } from "../../redux/loadersSlice";
-import { getMovies } from "../../apicalls/movies";
+import { deleteMovie, getMovies } from "../../apicalls/movies";
 
 function MoviesList() {
   const [movies, setMovies] = React.useState([]);
@@ -16,33 +16,51 @@ function MoviesList() {
 
   const getData = async () => {
     try {
-      dispatch(ShowLoading())
+      dispatch(ShowLoading());
       const response = await getMovies();
 
-      if (response.success) { 
+      if (response.success) {
         setMovies(response.data);
-      }else {
+      } else {
         message.error(response.message);
       }
-      dispatch(Hideloading())
+      dispatch(Hideloading());
     } catch (error) {
       dispatch(Hideloading());
       message.error(error.message);
     }
-  }
+  };
+
+  
 
   const columns = [
+    {
+      title: "Poster",
+      dataIndex: "poster",
+      render: (text, record) => {
+        return (
+          <img
+            src={
+              record.poster ? record.poster : "https://via.placeholder.com/100"
+            }
+            alt="poster"
+            style={{ width: "100px", height: "100px", objectFit: "contain" }}
+            className="br-1"
+          />
+        );
+      },
+    },
     {
       title: "Name",
       dataIndex: "title",
     },
     {
       title: "Description",
-      dataIndex: "description", 
+      dataIndex: "description",
     },
     {
       title: "Duration",
-      dataIndex: "duration", 
+      dataIndex: "duration",
     },
     {
       title: "Genre",
@@ -56,22 +74,38 @@ function MoviesList() {
       title: "Release Date",
       dataIndex: "releaseDate",
       render: (text, record) => {
-        return moment(record.releaseDate).format("DD-MM-YYYY"); 
-      }
+        return moment(record.releaseDate).format("DD-MM-YYYY");
+      },
     },
     {
       title: "Action",
       dataIndex: "action",
-      render: (text, record) => { 
-        return <div className="flex align-center gap-1">
-          <i className="ri-pencil-line text-info"></i>
-          <i className="ri-delete-bin-line text-error"></i>
-        </div>
-      }
-    }
-  ]
+      render: (text, record) => {
+        return (
+          <div className="flex align-center gap-1">
+            <i
+              className="ri-pencil-line text-info cursor-pointer"
+              onClick={() => {
+                setSelectedMovie(record);
+                setFormType("edit");
+                setShowMovieFormModal(true);
+              }}
+            ></i>
+            <i
+              className="ri-delete-bin-line text-error cursor-pointer"
+              onClick={() => {
+                setSelectedMovie(record);
+                setFormType("delete");
+                setShowMovieFormModal(true);
+              }}
+            ></i>
+          </div>
+        );
+      },
+    },
+  ];
 
-  useEffect(() => { 
+  useEffect(() => {
     getData();
   }, []);
   return (
@@ -87,7 +121,6 @@ function MoviesList() {
         />
       </div>
 
-
       <Table columns={columns} dataSource={movies} />
       {showMovieFormModal && (
         <MovieForm
@@ -96,6 +129,8 @@ function MoviesList() {
           selectedMovie={selectedMovie}
           setSelectedMovie={setSelectedMovie}
           formType={formType}
+          setFormType={setFormType}
+          getData={getData}
         />
       )}
     </div>
