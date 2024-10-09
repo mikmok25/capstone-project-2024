@@ -39,7 +39,7 @@ function ProtectedRoute({ children }) {
   return (
     user && (
       <div className="layout p-1">
-        <div className="header bg-primary flex justify-between p-2 items-center">
+        <div className="header bg-primary flex items-center justify-between p-2 items-center">
           <div>
             <h1 className="text-2xl text-white cursor-pointer" onClick={() => navigate("/")}>MOVIEMATE</h1>
           </div>

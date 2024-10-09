@@ -74,11 +74,22 @@ function TheatresList() {
       dataIndex: "email",
     },
     {
+      title: "Status",
+      dataIndex: "isActive",
+      render: (text, record) => {
+        if(text) {
+          return (<span className="text-success">Approved</span>)
+        } else {
+          return (<span className="text-warning">Pending</span>)
+        }
+      }
+    },
+    {
       title: "Action",
       dataIndex: "action",
       render: (text, record) => {
         return (
-          <div className="flex align-center gap-1">
+          <div className="flex items-center gap-1">
             <i
               className="ri-pencil-line text-info cursor-pointer"
               onClick={() => {
@@ -93,6 +104,8 @@ function TheatresList() {
                 handleDelete(record._id);
               }}
             ></i>
+
+           {record.isActive && <span className="underline">Shows</span>}
           </div>
         );
       },
