@@ -10,6 +10,7 @@ import {
 import { message, Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Hideloading, ShowLoading } from "../../redux/loadersSlice";
+import Shows from "./Shows";
 
 function TheatresList() {
   const { user } = useSelector((state) => state.users);
@@ -18,6 +19,7 @@ function TheatresList() {
   const [selectedTheatre = null, setSelectedTheatre] = useState(null);
   const [formType = "add", setFormType] = useState("add");
   const [theatres = [], setTheatres] = useState([]);
+  const [openShowsModal = false, setOpenShowsModal] = useState(false);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -105,8 +107,15 @@ function TheatresList() {
               }}
             ></i>
 
-           {record.isActive && <span className="underline">Shows</span>}
-          </div>
+           {record.isActive && <span 
+           className="underline cursor-pointer"
+           onClick={() => {
+            setOpenShowsModal(true)
+            setSelectedTheatre(record)
+          }}
+           
+           >Shows</span>}
+          </div>  
         );
       },
     },
@@ -141,6 +150,12 @@ function TheatresList() {
           getData={getData}
         />
       )}
+
+      {openShowsModal && <Shows
+      openShowsModal={openShowsModal}
+      setOpenShowsModal={setOpenShowsModal}
+      theatre={selectedTheatre}
+      />}
     </div>
   );
 }
