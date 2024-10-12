@@ -30,7 +30,8 @@ export const GetAllTheatres = async () => {
 export const GetAllTheatresByOwner = async (payload) => {
   try {
     const response = await axiosInstance.post(
-      "/api/theatres/get-all-theatres-by-owner", payload
+      "/api/theatres/get-all-theatres-by-owner",
+      payload
     );
     return response.data;
   } catch (error) {
@@ -50,15 +51,60 @@ export const updateTheatre = async (payload) => {
   } catch (error) {
     return error.response;
   }
-}
+};
 
 // Delete theatre
 
 export const deleteTheatre = async (payload) => {
   try {
-    const response = await axiosInstance.post("/api/theatres/delete-theatre", payload);
+    const response = await axiosInstance.post(
+      "/api/theatres/delete-theatre",
+      payload
+    );
     return response.data;
   } catch (error) {
     return error.response;
   }
-}
+};
+
+//  Add show
+
+export const addShow = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/theatres/add-show",
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+// Get all shows
+
+export const getAllShowsByTheatre = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/theatres/get-all-shows-by-theatre",
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
+// Delete Show
+
+export const DeleteShow = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/theatres/delete-show",
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};

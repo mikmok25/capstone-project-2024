@@ -5,7 +5,7 @@ import moment from "moment";
 import { message, Table } from "antd";
 import { useDispatch } from "react-redux";
 import { Hideloading, ShowLoading } from "../../redux/loadersSlice";
-import { deleteMovie, getMovies } from "../../apicalls/movies";
+import { deleteMovie, getAllMovies } from "../../apicalls/movies";
 
 function MoviesList() {
   const [movies, setMovies] = React.useState([]);
@@ -17,7 +17,7 @@ function MoviesList() {
   const getData = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await getMovies();
+      const response = await getAllMovies();
 
       if (response.success) {
         setMovies(response.data);

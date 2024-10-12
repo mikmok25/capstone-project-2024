@@ -13,7 +13,7 @@ export const addMovie = async (payload) => {
 
 // Get all movies
 
-export const getMovies = async () => {
+export const getAllMovies = async () => {
   try {
     const response = await axiosInstance.get("/api/movies/get-movies");
     return response.data;
