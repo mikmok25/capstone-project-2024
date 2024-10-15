@@ -3,6 +3,10 @@
   border: 1px solid #b1b1b1;
 }
 
+.img {
+  width: 100%;
+}
+
 .w-400 {
   width: 400px;
 }
@@ -31,6 +35,11 @@ table {
 th.ant-table-cell {
   border-bottom: 1px solid #b1b1b1 !important;
   text-transform: uppercase;
+}
+
+.search-input {
+  height: 60px;
+  border-radius: 5px;
 }
 
 .cursor-pointer {
