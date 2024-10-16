@@ -8,6 +8,8 @@ import StripeCheckout from "react-stripe-checkout";
 import Button from "../../components/Button";
 import moment from "moment";
 
+import { MakePayment } from "../../apicalls/bookings";
+
 function BookShow() {
   const [show, setShow] = React.useState(null);
   const [selectedSeats, setSelectedSeats] = React.useState([]);
@@ -82,7 +84,25 @@ function BookShow() {
     );
   };
 
-  const onToken = (token) => {};
+  const onToken = async (token) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await MakePayment(
+        token,
+        selectedSeats.length * show.ticketPrice * 100 * 1.13
+      );
+
+      if (response.success) {
+        message.success(response.message);
+      } else {
+        message.error(response.message);
+      }
+      dispatch(Hideloading());
+    } catch (error) {
+      message.error(error.message);
+      dispatch(Hideloading());
+    }
+  };
   useEffect(() => {
     getData();
   }, []);
@@ -115,18 +135,34 @@ function BookShow() {
 
         <div className="flex justify-center mt-2">{getSeats()}</div>
 
-        {selectedSeats.length > 0 && <div className="mt-2 text-center">
-          <StripeCheckout
-            token={onToken}
-            currency="CAD"
-            amount={selectedSeats.length * show.ticketPrice * 100}
-            stripeKey="pk_test_51QAOo0QHqRYWcQjnlt0HIaliTQkxJji6bc8a85DqEbklDFY6DyhqbotFWAIM6L0ttu4tR1ahUvU5qWksTWDXpMSG00JNodi93V"
-          >
-            <Button title="Book Now"></Button>
-          </StripeCheckout>
-        </div> }
+        {selectedSeats.length > 0 && (
+          <div className="mt-2 flex justify-center flex-col items-center ">
+            <div className="flex flex-col mb-1">
+              <p>
+                Ticket Price: $
+                {Math.floor(selectedSeats.length * show.ticketPrice).toFixed(2)}
+              </p>
+              <p>
+                HST (13%): $
+                {(selectedSeats.length * show.ticketPrice * 0.13).toFixed(2)}
+              </p>
+              <h1 className="text-md">
+                Total: $
+                {(selectedSeats.length * show.ticketPrice * 1.13).toFixed(2)}
+              </h1>
+            </div>
+            <StripeCheckout
+              token={onToken}
+              currency="CAD"
+              amount={Math.round(selectedSeats.length * show.ticketPrice * 100 * 1.13)}
+              billingAddress
+              stripeKey="pk_test_51QAOo0QHqRYWcQjnlt0HIaliTQkxJji6bc8a85DqEbklDFY6DyhqbotFWAIM6L0ttu4tR1ahUvU5qWksTWDXpMSG00JNodi93V"
+            >
+              <Button title="Book Now"></Button>
+            </StripeCheckout>
+          </div>
+        )}
       </div>
-
     )
   );
 }
