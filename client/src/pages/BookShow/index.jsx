@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { Hideloading, ShowLoading } from "../../redux/loadersSlice";
 import { message } from "antd";
 import { GetShowById } from "../../apicalls/theatres";
+import StripeCheckout from "react-stripe-checkout";
+import Button from "../../components/Button";
 import moment from "moment";
 
 function BookShow() {
@@ -36,11 +38,12 @@ function BookShow() {
 
     return (
       <div className="flex gap-1 flex-col p-2 card ">
-        <div className="card p-2 mb-2 text-center"><h1 className="text-xl">SCREEN</h1></div>
+        <div className="card p-2 mb-2 text-center">
+          <h1 className="text-xl">SCREEN</h1>
+        </div>
         {Array.from(Array(rows).keys()).map((seat, index) => {
           return (
             <div className="flex gap-1 justify-center">
-              
               {Array.from(Array(columns).keys()).map((column, index) => {
                 const seatNumber = seat * columns + column + 1;
                 let seatClass = "seat";
@@ -78,6 +81,8 @@ function BookShow() {
       </div>
     );
   };
+
+  const onToken = (token) => {};
   useEffect(() => {
     getData();
   }, []);
@@ -109,7 +114,19 @@ function BookShow() {
         {/*  Seats */}
 
         <div className="flex justify-center mt-2">{getSeats()}</div>
+
+        {selectedSeats.length > 0 && <div className="mt-2 text-center">
+          <StripeCheckout
+            token={onToken}
+            currency="CAD"
+            amount={selectedSeats.length * show.ticketPrice * 100}
+            stripeKey="pk_test_51QAOo0QHqRYWcQjnlt0HIaliTQkxJji6bc8a85DqEbklDFY6DyhqbotFWAIM6L0ttu4tR1ahUvU5qWksTWDXpMSG00JNodi93V"
+          >
+            <Button title="Book Now"></Button>
+          </StripeCheckout>
+        </div> }
       </div>
+
     )
   );
 }

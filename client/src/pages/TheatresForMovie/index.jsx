@@ -67,7 +67,7 @@ function TheatresForMovie() {
     movie && (
       <div>
         {/* Movie Information */}
-        <div className="flex justify-between mb-2">
+        <div className="flex  mb-2">
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl uppercase">
               {movie.title} ({moment(movie.releaseDate).format("YYYY")})
@@ -82,6 +82,13 @@ function TheatresForMovie() {
             <h1 className="text-md">Genre: {movie.genre}</h1>
             <h1 className="text-md">Language: {movie.language}</h1>
           </div>
+        </div>
+
+        <hr />
+        {/* Movie Theatres */}
+        <div className="flex justify-between  mt-2">
+          <h1 className="text-xl uppercase mt-1">Theatres</h1>
+
           <div>
             <h1 className="text-md">Select Date:</h1>
 
@@ -96,12 +103,6 @@ function TheatresForMovie() {
               className="mt-1"
             />
           </div>
-        </div>
-
-        <hr />
-        {/* Movie Theatres */}
-        <div>
-          <h1 className="text-xl uppercase mt-1">Theatres</h1>
         </div>
 
         {theatres.length > 0 ? (
