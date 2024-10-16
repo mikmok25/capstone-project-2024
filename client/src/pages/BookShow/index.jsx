@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import { Hideloading, ShowLoading } from "../../redux/loadersSlice";
 import { message } from "antd";
 import { GetShowById } from "../../apicalls/theatres";
@@ -8,13 +8,15 @@ import StripeCheckout from "react-stripe-checkout";
 import Button from "../../components/Button";
 import moment from "moment";
 
-import { MakePayment } from "../../apicalls/bookings";
+import { BookShowTickets, MakePayment } from "../../apicalls/bookings";
 
 function BookShow() {
+  const { user } = useSelector((state) => state.users);
   const [show, setShow] = React.useState(null);
   const [selectedSeats, setSelectedSeats] = React.useState([]);
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getData = async () => {
     try {
@@ -84,6 +86,30 @@ function BookShow() {
     );
   };
 
+
+  const book = async (transactionId) => {
+    try {
+      dispatch(ShowLoading());
+      const response = await BookShowTickets({
+        show: params.id,
+        seats: selectedSeats,
+        transactionId,
+        user: user._id,
+      });
+
+      if (response.success) {
+        message.success(response.message);
+        navigate("/profile");
+      } else {
+        message.error(response.message);
+      }
+      dispatch(Hideloading());
+    } catch (error) {
+      message.error(error.message);
+      dispatch(Hideloading());
+    }
+  };
+
   const onToken = async (token) => {
     try {
       dispatch(ShowLoading());
@@ -94,6 +120,7 @@ function BookShow() {
 
       if (response.success) {
         message.success(response.message);
+        book(response.data);
       } else {
         message.error(response.message);
       }
@@ -103,6 +130,8 @@ function BookShow() {
       dispatch(Hideloading());
     }
   };
+
+
   useEffect(() => {
     getData();
   }, []);
@@ -154,7 +183,9 @@ function BookShow() {
             <StripeCheckout
               token={onToken}
               currency="CAD"
-              amount={Math.round(selectedSeats.length * show.ticketPrice * 100 * 1.13)}
+              amount={Math.round(
+                selectedSeats.length * show.ticketPrice * 100 * 1.13
+              )}
               billingAddress
               stripeKey="pk_test_51QAOo0QHqRYWcQjnlt0HIaliTQkxJji6bc8a85DqEbklDFY6DyhqbotFWAIM6L0ttu4tR1ahUvU5qWksTWDXpMSG00JNodi93V"
             >

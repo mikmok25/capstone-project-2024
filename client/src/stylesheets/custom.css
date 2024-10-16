@@ -79,6 +79,8 @@ th.ant-table-cell {
 .booked-seat {
   background-color: #b1b1b1;
   color: rgb(104, 104, 104);
+  pointer-events: none;
+  cursor: not-allowed;
 }
 /* Loader */
 
