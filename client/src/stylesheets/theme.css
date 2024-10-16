@@ -1,6 +1,7 @@
 :root {
     --colour-primary: #002e2a;
     --colour-secondary: #e6b412;
+    --colour-tertiary: #999;
 }
 
 .bg-primary {
@@ -20,6 +21,10 @@
 
 .text-warning {
     color: #fc0;
+}
+
+.text-muted {
+    color: var(--colour-tertiary)
 }
 
 .text-info {

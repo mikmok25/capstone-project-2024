@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import Profile from "./pages/Profile";
 import Admin from "./pages/Admin";
 import TheatresForMovie from "./pages/TheatresForMovie";
+import BookShow from "./pages/BookShow";
 function App() {
   const { loading } = useSelector((state) => state.loaders);
   return (
@@ -38,6 +39,15 @@ function App() {
               <ProtectedRoute>
                 {" "}
                 <TheatresForMovie />{" "}
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/book-show/:id"
+            element={
+              <ProtectedRoute>
+                {" "}
+                <BookShow />{" "}
               </ProtectedRoute>
             }
           ></Route>

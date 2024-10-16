@@ -50,6 +50,36 @@ th.ant-table-cell {
   cursor: pointer;
 }
 
+.divider {
+  border-bottom: 1px solid #b1b1b1;
+  margin: 10px 0;
+}
+
+/* Seats */
+
+.seat {
+ height: 30px;
+ width: 40px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ border: 1px solid #b1b1b1;
+ color: #e6dfdf !important;
+}
+
+.selected-seat {
+  background-color: #02867d !important;
+  color: #ffffff !important;
+}
+
+ .selected-seat h1 {
+  color: #ffffff !important;
+}
+
+.booked-seat {
+  background-color: #b1b1b1;
+  color: rgb(104, 104, 104);
+}
 /* Loader */
 
 .loader-parent {

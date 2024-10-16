@@ -72,6 +72,8 @@ function TheatresForMovie() {
             <h1 className="text-2xl uppercase">
               {movie.title} ({moment(movie.releaseDate).format("YYYY")})
             </h1>
+            <h1 className="text-md uppercase">Synopsis:</h1>
+            <span>{movie.description}</span>
             <h1 className="text-md">Duration: {movie.duration} mins</h1>
 
             <h1 className="text-md">
@@ -91,6 +93,7 @@ function TheatresForMovie() {
                 setDate(e.target.value);
                 navigate(`/movie/${params.id}?date=${e.target.value}`);
               }}
+              className="mt-1"
             />
           </div>
         </div>
@@ -100,6 +103,45 @@ function TheatresForMovie() {
         <div>
           <h1 className="text-xl uppercase mt-1">Theatres</h1>
         </div>
+
+        {theatres.length > 0 ? (
+          <div className="mt-1 flex flex-col gap-1">
+            {theatres.map((theatre) => (
+              <div className="card p-2">
+                <h1 className="text-md uppercase mb-1">{theatre.name}</h1>
+                <span className="text-sm">{theatre.address}</span>
+
+                <div className="divider"></div>
+
+                <div className="flex gap-2">
+                  {theatre.shows
+                    .sort(
+                      (a, b) =>
+                        moment(a.time, "HH:mm") - moment(b.time, "HH:mm")
+                    )
+                    .map((show) => (
+                      <div
+                        className="card p-1 cursor-pointer"
+                        onClick={() => {
+                          navigate(`/book-show/${show._id}`);
+                        }}
+                      >
+                        <h1 className="text-sm">
+                          {moment(show.time, "HH:mm").format("hh:mm A")}
+                        </h1>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-1 flex justify-center align-center ">
+            <h1 className="text-xl text-muted">
+              NO SHOWS AVAILABLE DURING THIS DATE
+            </h1>
+          </div>
+        )}
       </div>
     )
   );

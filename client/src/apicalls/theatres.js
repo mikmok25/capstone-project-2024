@@ -109,6 +109,20 @@ export const DeleteShow = async (payload) => {
   }
 };
 
+// Update show
+
+export const updateShow = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/theatres/update-show",
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
+};
+
 // Get all theatres for a movie
 
 export const GetAllTheatresByMovie = async (payload) => {
@@ -121,6 +135,17 @@ export const GetAllTheatresByMovie = async (payload) => {
   } catch (error) {
     return error.response;
   }
+};
+
+// Get show by id
+export const GetShowById = async (payload) => {
+  try {
+    const response = await axiosInstance.post(
+      "/api/theatres/get-show-by-id",
+      payload
+    );
+    return response.data;
+  } catch (error) {
+    return error.response;
+  }
 }
-
-
